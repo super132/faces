@@ -1,4 +1,5 @@
-                                 Apache License
+/**
+ *                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
@@ -186,7 +187,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright {yyyy} {name of copyright owner}
+   Copyright {2016} {Jsoft company}
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -199,3 +200,36 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+ */
+package com.jsoft.faces;
+
+/**
+ * Feature to detect a face on an image.
+ *
+ * @author Jason Wong (super132j@yahoo.com)
+ * @version: ${id}
+ *
+ */
+public interface Feature {
+
+    /**
+     * The width of this feature, in the minimum unit size.
+     * @return The width in minimum unit size.
+     */
+    int width();
+
+    /**
+     * The height of this feature, in the minimum unit size.
+     * @return The height in minimum unit size.
+     */
+    int height();
+
+    /**
+     * The value of this feature, either black (false) or white (true), of the
+     * specified coordinate.
+     * @param width The x coordinate of the feature. 
+     * @param height The y coordinate of the feature.
+     * @return Black (false) or White (true).
+     */
+    boolean value(int width, int height);
+}

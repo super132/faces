@@ -23,6 +23,7 @@
  */
 package com.jsoft.faces;
 
+import com.jcabi.aspects.Immutable;
 import java.awt.image.BufferedImage;
 
 /**
@@ -32,6 +33,7 @@ import java.awt.image.BufferedImage;
  * @version $Id$
  * @since 0.1
  */
+@Immutable
 public final class IntBufferedImage implements IntegralImg {
 
     /**

@@ -31,14 +31,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Haar-like feature with white rectangle next to black rectangle on a
- * horizontal line for detection.
+ * Haar-like feature with 2 white rectangles enclosed the black rectangle on a
+ * vertical line for detection.
  *
  * @author Jason Wong (super132j@yahoo.com)
  * @version $Id$
  * @since 0.1
  */
-public final class HrHorizontal implements Feature {
+public final class HrThreeVertical implements Feature {
+
+    /**
+     * The number of rectangles in this feature.
+     */
+    private static final int NUM = 3;
 
     /**
      * Integral image for calculation.
@@ -49,7 +54,7 @@ public final class HrHorizontal implements Feature {
      * Ctor.
      * @param image Integral image.
      */
-    public HrHorizontal(final IntegralImg image) {
+    public HrThreeVertical(final IntegralImg image) {
         this.img = image;
     }
 
@@ -61,8 +66,11 @@ public final class HrHorizontal implements Feature {
         // @checkstyle NestedForDepthCheck (4 lines)
         for (int posx = initx; posx < size; ++posx) {
             for (int posy = inity; posy < size; ++posy) {
-                for (int wid = 1; (posx + 2 * wid) <= size; ++wid) {
-                    for (int tall = 1; (posy + tall) <= size; ++tall) {
+                for (int wid = 1; (posx + wid) <= size; ++wid) {
+                    for (int tall = 1;
+                        (posy + HrThreeVertical.NUM * tall) <= size;
+                        ++tall
+                    ) {
                         result.add(
                             new FtValue.Default(
                                 posx,
@@ -91,6 +99,12 @@ public final class HrHorizontal implements Feature {
     private long difference(final int posx, final int posy,
         final int wid, final int tall) {
         return this.img.values(posy, posx, posy + tall, posx + wid)
-            - this.img.values(posy, posx + wid, posy + tall, posx + 2 * wid);
+            - this.img.values(posy + tall, posx, posy + 2 * tall, posx + wid)
+            + this.img.values(
+                posy + 2 * tall,
+                posx,
+                posy + HrThreeVertical.NUM * tall,
+                posx + wid
+            );
     }
 }

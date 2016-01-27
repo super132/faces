@@ -31,24 +31,24 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link HrHorizontal}.
+ * Tests for {@link HrSquare}.
  *
  * @author Jason Wong (super132j@yahoo.com)
  * @version $Id$
  * @since 0.1
  */
-public final class HrHorizontalTest {
+public final class HrSquareTest {
 
     /**
-     * HrHorizontal can calculate feature values.
+     * HrSquare can calculate feature values.
      */
     @Test
     public void calculatesFeatureValues() {
         MatcherAssert.assertThat(
-            new HrHorizontal(new MkIntImage(Tv.HUNDRED, Tv.THOUSAND))
+            new HrSquare(new MkIntImage(Tv.HUNDRED, Tv.THOUSAND))
                 .values(0, 0, Tv.TWENTY + Tv.FOUR),
             // @checkstyle MagicNumberCheck (1 line)
-            Matchers.<FtValue>iterableWithSize(43200)
+            Matchers.<FtValue>iterableWithSize(20736)
         );
     }
 }

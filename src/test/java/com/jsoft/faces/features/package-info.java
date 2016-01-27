@@ -21,49 +21,12 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jsoft.faces;
 
 /**
- * The integral image represents the sum of pixels of the original image.
+ * Face detection features tests.
  *
  * @author Jason Wong (super132j@yahoo.com)
  * @version $Id$
  * @since 0.1
  */
-public interface IntegralImg {
-
-    /**
-     * The width of the integral image in pixels.
-     * @return The width.
-     */
-    int width();
-
-    /**
-     * The height of the integral image in pixels.
-     * @return The height.
-     */
-    int height();
-
-    /**
-     * Return the sum of the pixels of the original image of the point with the
-     * specified coordinates being the right bottom corner of the point.
-     *
-     * @param horiz The X coordinate.
-     * @param vert The Y coordinate.
-     * @return The sum of the pixels in the original image.
-     */
-    long values(final int horiz, final int vert);
-
-    /**
-     * Return the sum of the pixels of the original image of the specified
-     * area.
-     * @param top Top Y coordinate
-     * @param left Left X coordinate
-     * @param bottom Bottom Y coordinate
-     * @param right Right X coordinate
-     * @return The sum of the pixels of the specified area.
-     * @checkstyle ParameterNumberCheck (3 lines)
-     */
-    long values(final int top, final int left, final int bottom,
-        final int right);
-}
+package com.jsoft.faces.features;

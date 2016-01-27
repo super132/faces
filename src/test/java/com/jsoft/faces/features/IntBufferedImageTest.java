@@ -21,57 +21,50 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jsoft.faces;
+package com.jsoft.faces.features;
 
 import com.jcabi.aspects.Tv;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Image pixel in grayscale (intensity).
+ * Tests for {@link IntBufferedImage}.
  *
  * @author Jason Wong (super132j@yahoo.com)
  * @version $Id$
  * @since 0.1
  */
-final class Pixels {
+public final class IntBufferedImageTest {
 
     /**
-     * Bit mask to extract RGB.
+     * IntBufferdImage can return intergal value.
      */
-    private static final int MASK = 0xFF;
-
-    /**
-     * The width of the original image.
-     */
-    private final transient int width;
-
-    /**
-     * The raw pixel arrays from BufferedImage.
-     */
-    private final transient DataBuffer raw;
-
-    /**
-     * Ctor.
-     * @param img The image.
-     */
-    Pixels(final BufferedImage img) {
-        this.raw = img.getRaster().getDataBuffer();
-        this.width = img.getWidth();
-    }
-
-    /**
-     * Obtain the intensity of the given point.
-     * @param horiz The X coordinate.
-     * @param vert The Y coordinate.
-     * @return The image intensity value.
-     */
-    public int value(final int horiz, final int vert) {
-        final int position = vert * this.width + horiz;
-        // @checkstyle MagicNumberCheck (1 line)
-        final int red = this.raw.getElem(position) >> 16 & Pixels.MASK;
-        final int green = this.raw.getElem(position) >> Tv.EIGHT & Pixels.MASK;
-        final int blue = this.raw.getElem(position) & Pixels.MASK;
-        return (red + green + blue) / Tv.THREE;
+    @Test
+    public void returnsIntergalValue() {
+        final int width = Tv.HUNDRED;
+        final int height = Tv.THOUSAND;
+        final BufferedImage img = new BufferedImage(
+            width, height, BufferedImage.TYPE_INT_ARGB
+        );
+        final Graphics2D graphic = img.createGraphics();
+        graphic.setColor(new Color(1, 1, 1));
+        graphic.fillRect(0, 0, width, height);
+        graphic.dispose();
+        final IntBufferedImage integral = new IntBufferedImage(img);
+        MatcherAssert.assertThat(
+            integral.values(2, 2), Matchers.is((long) Tv.NINE)
+        );
+        MatcherAssert.assertThat(
+            integral.values(width - 1, height - 1),
+            Matchers.is((long) Tv.HUNDRED * Tv.THOUSAND)
+        );
+        MatcherAssert.assertThat(
+            integral.values(1, 1, 2, 2),
+            Matchers.is((long) Tv.FOUR)
+        );
     }
 }

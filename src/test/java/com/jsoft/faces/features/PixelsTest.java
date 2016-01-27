@@ -21,7 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jsoft.faces;
+package com.jsoft.faces.features;
 
 import com.jcabi.aspects.Tv;
 import java.awt.Color;

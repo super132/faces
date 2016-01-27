@@ -33,23 +33,12 @@ package com.jsoft.faces;
 public interface Feature {
 
     /**
-     * The width of this feature, in the minimum unit size.
-     * @return The width in minimum unit size.
+     * The value of this feature, computed in different size within the square
+     * scan window.
+     * @param posx The x coordinate of the scan window
+     * @param posy The y coordinate of the scan window
+     * @param size The size of the scan window
+     * @return List of {@link FtValue}.
      */
-    int width();
-
-    /**
-     * The height of this feature, in the minimum unit size.
-     * @return The height in minimum unit size.
-     */
-    int height();
-
-    /**
-     * The value of this feature, either black (false) or white (true), of the
-     * specified coordinate.
-     * @param width The x coordinate of the feature.
-     * @param height The y coordinate of the feature.
-     * @return Black (false) or White (true).
-     */
-    boolean value(int width, int height);
+    Iterable<FtValue> values(final int posx, final int posy, final int size);
 }

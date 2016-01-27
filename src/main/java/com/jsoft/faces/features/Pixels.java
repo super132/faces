@@ -21,49 +21,56 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jsoft.faces;
+package com.jsoft.faces.features;
+
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
 
 /**
- * The integral image represents the sum of pixels of the original image.
+ * Image pixel in grayscale (intensity).
  *
  * @author Jason Wong (super132j@yahoo.com)
  * @version $Id$
  * @since 0.1
  */
-public interface IntegralImg {
+final class Pixels {
 
     /**
-     * The width of the integral image in pixels.
-     * @return The width.
+     * Bit mask to extract RGB.
      */
-    int width();
+    private static final int MASK = 0xFF;
 
     /**
-     * The height of the integral image in pixels.
-     * @return The height.
+     * The width of the original image.
      */
-    int height();
+    private final transient int width;
 
     /**
-     * Return the sum of the pixels of the original image of the point with the
-     * specified coordinates being the right bottom corner of the point.
-     *
+     * The raw pixel arrays from BufferedImage.
+     */
+    private final transient DataBuffer raw;
+
+    /**
+     * Ctor.
+     * @param img The image.
+     */
+    Pixels(final BufferedImage img) {
+        this.raw = img.getRaster().getDataBuffer();
+        this.width = img.getWidth();
+    }
+
+    /**
+     * Obtain the intensity of the given point.
      * @param horiz The X coordinate.
      * @param vert The Y coordinate.
-     * @return The sum of the pixels in the original image.
+     * @return The image intensity value.
      */
-    long values(final int horiz, final int vert);
-
-    /**
-     * Return the sum of the pixels of the original image of the specified
-     * area.
-     * @param top Top Y coordinate
-     * @param left Left X coordinate
-     * @param bottom Bottom Y coordinate
-     * @param right Right X coordinate
-     * @return The sum of the pixels of the specified area.
-     * @checkstyle ParameterNumberCheck (3 lines)
-     */
-    long values(final int top, final int left, final int bottom,
-        final int right);
+    public int value(final int horiz, final int vert) {
+        final int position = vert * this.width + horiz;
+        // @checkstyle MagicNumberCheck (4 line)
+        final int red = this.raw.getElem(position) >> 16 & Pixels.MASK;
+        final int green = this.raw.getElem(position) >> 8 & Pixels.MASK;
+        final int blue = this.raw.getElem(position) & Pixels.MASK;
+        return (red + green + blue) / 3;
+    }
 }

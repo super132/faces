@@ -21,19 +21,20 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jsoft.faces;
+package com.jsoft.faces.features;
 
-import com.jcabi.aspects.Immutable;
+import com.jsoft.faces.IntegralImg;
 import java.awt.image.BufferedImage;
 
 /**
  * Integral image.
  *
+ * <pre>This class is NOT thread-safe.</pre>
+ *
  * @author Jason Wong (super132j@yahoo.com)
  * @version $Id$
  * @since 0.1
  */
-@Immutable
 public final class IntBufferedImage implements IntegralImg {
 
     /**
@@ -85,22 +86,22 @@ public final class IntBufferedImage implements IntegralImg {
         final long result;
         if (horiz < 0 || vert < 0) {
             result = 0;
-        } else if (this.data[horiz][vert] == -1) {
+        } else if (this.data[horiz][vert] >= 0) {
+            result = this.data[horiz][vert];
+        } else {
             result = this.pixels.value(horiz, vert)
                 - this.values(horiz - 1, vert - 1)
                 + this.values(horiz, vert - 1)
                 + this.values(horiz - 1, vert);
             this.data[horiz][vert] = result;
-        } else {
-            result = this.data[horiz][vert];
         }
         return result;
     }
 
     // @checkstyle ParameterNumberCheck (3 lines)
     @Override
-    public long values(final int top, final int left, final int right,
-        final int bottom) {
+    public long values(final int top, final int left, final int bottom,
+        final int right) {
         return this.values(right, bottom) - this.values(right, top - 1)
             - this.values(left - 1, bottom) + this.values(left - 1, top - 1);
     }
